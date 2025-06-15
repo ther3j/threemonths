@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchanted Memory Codex</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;1,400&family=Dancing+Script:wght@400;700&display=swap');
+
+        :root {
+            --gold: #d4af37;
+            --deep-gold: #b8941f;
+            --dark-purple: #0f0c29;
+            --medium-purple: #24243e;
+            --light-purple: #302b63;
+            --parchment: #f9f3e0;
+            --aged-parchment: #e8d9b5;
+            --wood: #8b4513;
+            --dark-wood: #5e2c04;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: radial-gradient(ellipse at center, var(--medium-purple) 0%, var(--dark-purple) 100%);
+            color: var(--gold);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Enhanced magical background */
+        .magic-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .aurora {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg,
+                    rgba(138, 43, 226, 0.1) 0%,
+                    rgba(72, 61, 139, 0.1) 25%,
+                    rgba(147, 0, 211, 0.1) 50%,
+                    rgba(75, 0, 130, 0.1) 75%,
+                    rgba(138, 43, 226, 0.1) 100%);
+            animation: aurora 15s ease-in-out infinite;
+        }
+
+        @keyframes aurora {
+
+            0%,
+            100% {
+                transform: rotate(0deg) scale(1);
+                opacity: 0.3;
+            }
+
+            25% {
+                transform: rotate(90deg) scale(1.1);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: rotate(180deg) scale(0.9);
+                opacity: 0.4;
+            }
+
+            75% {
+                transform: rotate(270deg) scale(1.05);
+                opacity: 0.5;
+            }
+        }
+
+        /* Enhanced closed book with 3D depth */
+        .enchanted-grimoire {
+            width: 350px;
+            height: 450px;
+            background: linear-gradient(135deg, var(--dark-wood) 0%, var(--wood) 30%, var(--dark-wood) 100%);
+            border: 20px solid var(--gold);
+            border-radius: 8px 20px 20px 8px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.9),
+                inset -15px 0 30px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(212, 175, 55, 0.2);
+            transform-style: preserve-3d;
+            transform: perspective(1500px) rotateY(5deg) rotateX(2deg);
+            z-index: 10;
+        }
+
+        .enchanted-grimoire:hover {
+            transform: perspective(1500px) rotateY(-15deg) rotateX(-5deg) translateY(-10px);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.8),
+                inset -15px 0 30px rgba(0, 0, 0, 0.5),
+                0 0 150px rgba(212, 175, 55, 0.4),
+                0 0 50px rgba(138, 43, 226, 0.3);
+        }
+
+        .grimoire-cover {
+            position: absolute;
+            top: 15px;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            border: 3px solid rgba(212, 175, 55, 0.5);
+            border-radius: 5px 15px 15px 5px;
+            background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            overflow: hidden;
+        }
+
+        .grimoire-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--gold);
+            text-shadow:
+                0 0 20px rgba(212, 175, 55, 0.8),
+                2px 2px 4px rgba(0, 0, 0, 0.8);
+            letter-spacing: 6px;
+            line-height: 1.2;
+            z-index: 5;
+        }
+
+        .grimoire-subtitle {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            color: rgba(212, 175, 55, 0.8);
+            text-align: center;
+            font-style: italic;
+        }
+
+        .grimoire-spine {
+            position: absolute;
+            left: -20px;
+            top: 25px;
+            bottom: 25px;
+            width: 20px;
+            background: linear-gradient(180deg, var(--dark-wood) 0%, var(--wood) 50%, var(--dark-wood) 100%);
+            border-radius: 8px 0 0 8px;
+            box-shadow: inset -8px 0 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .grimoire-ornament {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            z-index: 2;
+        }
+
+        .grimoire-ornament::before {
+            content: '✧';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: var(--gold);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 10px var(--gold);
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                text-shadow: 0 0 30px var(--gold), 0 0 50px var(--gold);
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        /* Enhanced floating particles */
+        .mystical-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float-mystical 10s infinite linear;
+            opacity: 0.8;
+        }
+
+        @keyframes float-mystical {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(1);
+            }
+
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(1);
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced opened album with smooth page turns */
+        .mystical-tome {
+            display: none;
+            width: 95%;
+            max-width: 1200px;
+            perspective: 3000px;
+            z-index: 15;
+        }
+
+        .tome-pages {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .tome-page {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--parchment) 0%, var(--aged-parchment) 100%);
+            border: 2px solid var(--gold);
+            padding: 2.5rem;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                inset 0 0 50px rgba(139, 69, 19, 0.1);
+            transform-origin: left center;
+            transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+            backface-visibility: hidden;
+        }
+
+        .page-left {
+            left: 0;
+            border-radius: 15px 0 0 15px;
+            background: linear-gradient(90deg, var(--aged-parchment) 0%, var(--parchment) 100%);
+            box-shadow:
+                inset 10px 0 20px rgba(139, 69, 19, 0.2),
+                0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-right {
+            right: 0;
+            border-radius: 0 15px 15px 0;
+            background: linear-gradient(90deg, var(--parchment) 0%, var(--aged-parchment) 100%);
+            box-shadow:
+                inset -10px 0 20px rgba(139, 69, 19, 0.2),
+                0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-turning {
+            transform: rotateY(-180deg);
+            z-index: 10;
+        }
+
+        .page-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .memory-frame {
+            width: 90%;
+            height: 75%;
+            border: 20px solid var(--wood);
+            background: linear-gradient(45deg, #000 0%, #1a1a1a 100%);
+            position: relative;
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                inset 0 0 0 3px var(--gold);
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .memory-frame:hover {
+            transform: scale(1.02);
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 3px var(--gold),
+                0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .memory-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: sepia(10%) contrast(1.1) brightness(1.05);
+        }
+
+        .memory-frame:hover .memory-photo {
+            transform: scale(1.05);
+            filter: sepia(5%) contrast(1.2) brightness(1.1);
+        }
+
+        .memory-caption {
+            margin-top: 1.5rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--dark-wood);
+            text-shadow: 0 1px 3px rgba(212, 175, 55, 0.3);
+            line-height: 1.4;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            right: 25px;
+            font-family: 'Cinzel', serif;
+            color: var(--wood);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .page-flourish {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        /* Enhanced magical controls */
+        .tome-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .enchanted-button {
+            background: linear-gradient(135deg, var(--gold) 0%, #ffd700 50%, var(--deep-gold) 100%);
+            color: var(--dark-wood);
+            border: none;
+            padding: 1rem 2rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow:
+                0 8px 25px rgba(212, 175, 55, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .enchanted-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .enchanted-button:hover::before {
+            left: 100%;
+        }
+
+        .enchanted-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow:
+                0 15px 35px rgba(212, 175, 55, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, var(--gold) 100%);
+        }
+
+        .enchanted-button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        /* Page transition effects */
+        .page-transition {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.2) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease-out;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .page-transition.active {
+            transform: translateX(100%);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .enchanted-grimoire {
+                width: 280px;
+                height: 380px;
+            }
+
+            .grimoire-title {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+
+            .tome-pages {
+                height: 500px;
+            }
+
+            .tome-page {
+                padding: 1.5rem;
+            }
+
+            .memory-caption {
+                font-size: 1.2rem;
+            }
+
+            .tome-controls {
+                gap: 1rem;
+            }
+
+            .enchanted-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            .enchanted-grimoire {
+                width: 240px;
+                height: 320px;
+            }
+
+            .grimoire-title {
+                font-size: 1.6rem;
+                letter-spacing: 2px;
+            }
+
+            .tome-pages {
+                height: 400px;
+            }
+
+            .tome-page {
+                padding: 1rem;
+            }
+        }
+
+        /* Loading animation */
+        .loading-shimmer {
+            background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.3) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Back to Homepage Button -->
+    <a href="1.html" class="nav-item" style="
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1100;
+        background: rgba(44, 24, 16, 0.9);
+        border: 2px solid #d4af37;
+        border-radius: 15px;
+        padding: 0.5rem 1.2rem;
+        font-size: 1rem;
+        color: #d4af37;
+        text-decoration: none;
+        font-family: 'Cinzel', serif;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(44,24,16,0.15);
+    " onmouseover="this.style.background='#d4af37';this.style.color='#2c1810';this.style.transform='translateX(5px)';"
+        onmouseout="this.style.background='rgba(44, 24, 16, 0.9)';this.style.color='#d4af37';this.style.transform='none';">
+        ← Back to Homepage
+    </a>
+    <!-- ...existing code... -->
+    <div class="magic-canvas">
+        <div class="aurora"></div>
+    </div>
+    <div class="mystical-particles" id="particles"></div>
+
+    <!-- Enhanced Closed Book -->
+    <div class="enchanted-grimoire" id="grimoire">
+        <div class="grimoire-spine"></div>
+        <div class="grimoire-cover">
+            <div class="grimoire-ornament"></div>
+            <h1 class="grimoire-title">MYSTICAL<br>MEMORIES</h1>
+            <p class="grimoire-subtitle">Our Enchanted Journey</p>
+        </div>
+    </div>
+
+    <!-- Enhanced Opened Album -->
+    <div class="mystical-tome" id="tome">
+        <div class="tome-pages" id="pages">
+            <div class="tome-page page-left" data-page="0">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery1.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">The dawn of our magical adventure</p>
+                    <span class="page-number">Chapter I</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-right" data-page="1">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery2.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">When our souls first intertwined</p>
+                    <span class="page-number">Chapter II</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-left" data-page="2" style="z-index: 1;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery9.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">Adventures in wonderland</p>
+                    <span class="page-number">Chapter III</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-right" data-page="3" style="z-index: 1;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery10.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">Moments of pure enchantment</p>
+                    <span class="page-number">Chapter IV</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-left" data-page="4" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery5.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">Dancing under starlit skies</p>
+                    <span class="page-number">Chapter V</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-right" data-page="5" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery6.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">Till death splits us apart</p>
+                    <span class="page-number">Chapter VI</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-left" data-page="6" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery7.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">Baby you look perfect even with flaws</p>
+                    <span class="page-number">Chapter VII</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-right" data-page="7" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery8.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">My aurora, the breathtaking view</p>
+                    <span class="page-number">Chapter VIII</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-left" data-page="8" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery3.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption"> caught my eyes like shooting star</p>
+                    <span class="page-number">Chapter IX</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-right" data-page="9" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery4.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption"> Darn, those brown eyes !! </p>
+                    <span class="page-number">Chapter X</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-left" data-page="10" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery11.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">I will be your wand</p>
+                    <span class="page-number">Chapter XI</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-right" data-page="11" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery12.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">As i choose you, always</p>
+                    <span class="page-number">Chapter XII</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-left" data-page="12" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery13.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">Boo Boo will u be my forever</p>
+                    <span class="page-number">Chapter XIII</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+            <div class="tome-page page-right" data-page="13" style="z-index: 0;">
+                <div class="page-content">
+                    <div class="memory-frame">
+                        <img src="photos/gallery14.jpeg" alt="Magical Memory" class="memory-photo">
+                    </div>
+                    <p class="memory-caption">Our story continues forever</p>
+                    <span class="page-number">Chapter XIV</span>
+                    <div class="page-flourish"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-transition" id="pageTransition"></div>
+
+        <div class="tome-controls">
+            <button class="enchanted-button" id="prevBtn">⮜ Previous</button>
+            <button class="enchanted-button" id="closeBtn">🔮 Close Tome</button>
+            <button class="enchanted-button" id="nextBtn">Next ⮞</button>
+        </div>
+    </div>
+
+    <script>
+        class EnchantedMemoryBook {
+            constructor() {
+                this.currentPagePair = 0;
+                // this.totalPagePairs = 3;
+                this.totalPagePairs = Math.ceil(document.querySelectorAll('.tome-page').length / 2);
+                this.isAnimating = false;
+
+                this.init();
+            }
+
+            init() {
+                this.createMagicalElements();
+                this.bindEvents();
+                this.startContinuousEffects();
+            }
+
+            createMagicalElements() {
+                this.createMysticalParticles();
+                this.createFloatingStars();
+            }
+
+            createMysticalParticles() {
+                const container = document.getElementById('particles');
+                const particleTypes = [
+                    { char: '✨', color: '#d4af37', size: '12px' },
+                    { char: '🌟', color: '#ffd700', size: '16px' },
+                    { char: '💫', color: '#e6e6fa', size: '14px' },
+                    { char: '⭐', color: '#fff8dc', size: '10px' },
+                    { char: '🔮', color: '#9370db', size: '18px' },
+                    { char: '✧', color: '#d4af37', size: '8px' },
+                    { char: '❋', color: '#dda0dd', size: '12px' },
+                    { char: '✦', color: '#f0e68c', size: '10px' }
+                ];
+
+                setInterval(() => {
+                    if (container.children.length < 25) {
+                        const particle = document.createElement('div');
+                        const type = particleTypes[Math.floor(Math.random() * particleTypes.length)];
+
+                        particle.className = 'particle';
+                        particle.textContent = type.char;
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.color = type.color;
+                        particle.style.fontSize = type.size;
+                        particle.style.animationDuration = (Math.random() * 8 + 10) + 's';
+                        particle.style.animationDelay = Math.random() * 2 + 's';
+
+                        container.appendChild(particle);
+
+                        setTimeout(() => {
+                            if (container.contains(particle)) {
+                                container.removeChild(particle);
+                            }
+                        }, 18000);
+                    }
+                }, 800);
+            }
+            showCurrentPages() {
+                const allPages = document.querySelectorAll('.tome-page');
+                allPages.forEach((page, idx) => {
+                    const pairIdx = Math.floor(idx / 2);
+                    if (pairIdx === this.currentPagePair) {
+                        page.style.display = '';
+                    } else {
+                        page.style.display = 'none';
+                        page.classList.remove('page-turning');
+                    }
+                });
+            }
+
+            createFloatingStars() {
+                const canvas = document.querySelector('.magic-canvas');
+
+                for (let i = 0; i < 150; i++) {
+                    const star = document.createElement('div');
+                    star.style.position = 'absolute';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.width = Math.random() * 2 + 1 + 'px';
+                    star.style.height = star.style.width;
+                    star.style.background = '#fff';
+                    star.style.borderRadius = '50%';
+                    star.style.animation = `twinkle ${Math.random() * 3 + 2}s ease-in-out infinite`;
+                    star.style.animationDelay = Math.random() * 3 + 's';
+                    canvas.appendChild(star);
+                }
+
+                // Add CSS for twinkling
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes twinkle {
+                        0%, 100% { opacity: 0.3; transform: scale(1); }
+                        50% { opacity: 1; transform: scale(1.5); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            bindEvents() {
+                const grimoire = document.getElementById('grimoire');
+                const closeBtn = document.getElementById('closeBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const prevBtn = document.getElementById('prevBtn');
+
+                grimoire.addEventListener('click', () => this.openTome());
+                closeBtn.addEventListener('click', () => this.closeTome());
+                nextBtn.addEventListener('click', () => this.nextPage());
+                prevBtn.addEventListener('click', () => this.prevPage());
+            }
+
+            // openTome() {
+            //     if (this.isAnimating) return;
+            //     this.isAnimating = true;
+
+            //     const grimoire = document.getElementById('grimoire');
+            //     const tome = document.getElementById('tome');
+
+            //     // Create magical opening effect
+            //     this.createSparkleExplosion();
+
+            //     // Animate grimoire closing
+            //     grimoire.style.transform = 'perspective(1500px) rotateY(180deg) scale(0.8)';
+            //     grimoire.style.opacity = '0';
+
+            //     setTimeout(() => {
+            //         grimoire.style.display = 'none';
+            //         tome.style.display = 'block';
+
+            //         // Magical entrance
+            //         tome.style.opacity = '0';
+            //         tome.style.transform = 'scale(0.3) rotateY(180deg)';
+            //         tome.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+            //         requestAnimationFrame(() => {
+            //             tome.style.opacity = '1';
+            //             tome.style.transform = 'scale(1) rotateY(0deg)';
+
+            //             setTimeout(() => {
+            //                 this.isAnimating = false;
+            //                 this.createSparkleExplosion();
+            //             }, 1000);
+            //         });
+            //     }, 600);
+            // }
+            openTome() {
+    if (this.isAnimating) return;
+    this.isAnimating = true;
+
+    const grimoire = document.getElementById('grimoire');
+    const tome = document.getElementById('tome');
+
+    // Create magical opening effect
+    this.createSparkleExplosion();
+
+    // Animate grimoire closing
+    grimoire.style.transform = 'perspective(1500px) rotateY(180deg) scale(0.8)';
+    grimoire.style.opacity = '0';
+
+    setTimeout(() => {
+        grimoire.style.display = 'none';
+        tome.style.display = 'block';
+
+        // Magical entrance
+        tome.style.opacity = '0';
+        tome.style.transform = 'scale(0.3) rotateY(180deg)';
+        tome.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+        requestAnimationFrame(() => {
+            tome.style.opacity = '1';
+            tome.style.transform = 'scale(1) rotateY(0deg)';
+
+            setTimeout(() => {
+                this.isAnimating = false;
+                this.createSparkleExplosion();
+                this.showCurrentPages(); // <-- Add this line here!
+            }, 1000);
+        });
+    }, 600);
+}
+
+            closeTome() {
+                if (this.isAnimating) return;
+                this.isAnimating = true;
+
+                const grimoire = document.getElementById('grimoire');
+                const tome = document.getElementById('tome');
+
+                // Create magical closing effect
+                this.createSparkleExplosion();
+
+                // Animate tome closing
+                tome.style.transform = 'scale(0.3) rotateY(-180deg)';
+                tome.style.opacity = '0';
+
+                setTimeout(() => {
+                    tome.style.display = 'none';
+                    grimoire.style.display = 'block';
+
+                    // Magical entrance
+                    grimoire.style.opacity = '0';
+                    grimoire.style.transform = 'perspective(1500px) rotateY(-180deg) scale(0.8)';
+                    grimoire.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+                    requestAnimationFrame(() => {
+                        grimoire.style.opacity = '1';
+                        grimoire.style.transform = 'perspective(1500px) rotateY(5deg) rotateX(2deg) scale(1)';
+
+                        setTimeout(() => {
+                            this.isAnimating = false;
+                            this.createSparkleExplosion();
+                        }, 1000);
+                    });
+                }, 600);
+            }
+
+            // nextPage() {
+            //     if (this.isAnimating || this.currentPagePair >= this.totalPagePairs - 1) return;
+            //     this.isAnimating = true;
+
+            //     this.showPageTransition();
+
+            //     const leftPage = document.querySelector(`[data-page="${this.currentPagePair * 2}"]`);
+            //     const rightPage = document.querySelector(`[data-page="${this.currentPagePair * 2 + 1}"]`);
+
+            //     // Turn pages with staggered animation
+            //     setTimeout(() => {
+            //         leftPage.classList.add('page-turning');
+            //     }, 100);
+
+            //     setTimeout(() => {
+            //         rightPage.classList.add('page-turning');
+            //         this.currentPagePair++;
+            //         this.updateButtonStates();
+            //     }, 300);
+
+            //     setTimeout(() => {
+            //         this.isAnimating = false;
+            //         this.createSparkleTrail();
+            //     }, 1400);
+            // }
+            nextPage() {
+                if (this.isAnimating || this.currentPagePair >= this.totalPagePairs - 1) return;
+                this.isAnimating = true;
+
+                this.showPageTransition();
+
+                const leftPage = document.querySelector(`[data-page="${this.currentPagePair * 2}"]`);
+                const rightPage = document.querySelector(`[data-page="${this.currentPagePair * 2 + 1}"]`);
+
+                // Turn pages with staggered animation
+                setTimeout(() => {
+                    leftPage.classList.add('page-turning');
+                }, 100);
+
+                setTimeout(() => {
+                    rightPage.classList.add('page-turning');
+                    this.currentPagePair++;
+                    this.updateButtonStates();
+                    this.showCurrentPages(); // <-- Add this line
+                }, 300);
+
+                setTimeout(() => {
+                    this.isAnimating = false;
+                    this.createSparkleTrail();
+                }, 1400);
+            }
+
+            prevPage() {
+                if (this.isAnimating || this.currentPagePair <= 0) return;
+                this.isAnimating = true;
+
+                this.showPageTransition();
+                this.currentPagePair--;
+
+                const leftPage = document.querySelector(`[data-page="${this.currentPagePair * 2}"]`);
+                const rightPage = document.querySelector(`[data-page="${this.currentPagePair * 2 + 1}"]`);
+
+                // Turn pages back with staggered animation
+                setTimeout(() => {
+                    rightPage.classList.remove('page-turning');
+                }, 100);
+
+                setTimeout(() => {
+                    leftPage.classList.remove('page-turning');
+                    this.updateButtonStates();
+                    this.showCurrentPages(); // <-- Add this line to hide/show correct pages
+                }, 300);
+
+                setTimeout(() => {
+                    this.isAnimating = false;
+                    this.createSparkleTrail();
+                }, 1400);
+            }
+            showPageTransition() {
+                const transition = document.getElementById('pageTransition');
+                transition.classList.add('active');
+
+                setTimeout(() => {
+                    transition.classList.remove('active');
+                }, 800);
+            }
+
+            updateButtonStates() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+
+                prevBtn.style.opacity = this.currentPagePair <= 0 ? '0.5' : '1';
+                prevBtn.style.cursor = this.currentPagePair <= 0 ? 'not-allowed' : 'pointer';
+
+                nextBtn.style.opacity = this.currentPagePair >= this.totalPagePairs - 1 ? '0.5' : '1';
+                nextBtn.style.cursor = this.currentPagePair >= this.totalPagePairs - 1 ? 'not-allowed' : 'pointer';
+            }
+
+            createSparkleExplosion() {
+                const colors = ['#d4af37', '#ffd700', '#fff8dc', '#dda0dd', '#e6e6fa'];
+                const symbols = ['✨', '🌟', '💫', '⭐', '✧', '❋', '✦'];
+
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.style.position = 'fixed';
+                        sparkle.style.left = (Math.random() * 100) + '%';
+                        sparkle.style.top = (Math.random() * 100) + '%';
+                        sparkle.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                        sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                        sparkle.style.zIndex = '1000';
+                        sparkle.style.pointerEvents = 'none';
+                        sparkle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                        sparkle.style.animation = 'sparkleExplosion 2s ease-out forwards';
+
+                        document.body.appendChild(sparkle);
+
+                        setTimeout(() => {
+                            if (document.body.contains(sparkle)) {
+                                document.body.removeChild(sparkle);
+                            }
+                        }, 2000);
+                    }, i * 50);
+                }
+
+                // Add explosion animation CSS
+                if (!document.querySelector('#sparkleCSS')) {
+                    const style = document.createElement('style');
+                    style.id = 'sparkleCSS';
+                    style.textContent = `
+                        @keyframes sparkleExplosion {
+                            0% { 
+                                transform: scale(0) rotate(0deg);
+                                opacity: 0;
+                            }
+                            20% {
+                                transform: scale(1.5) rotate(180deg);
+                                opacity: 1;
+                            }
+                            80% {
+                                transform: scale(1) rotate(300deg);
+                                opacity: 1;
+                            }
+                            100% { 
+                                transform: scale(0) rotate(360deg);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+
+            createSparkleTrail() {
+                const trail = document.createElement('div');
+                trail.style.position = 'fixed';
+                trail.style.top = '50%';
+                trail.style.left = '0';
+                trail.style.width = '100%';
+                trail.style.height = '2px';
+                trail.style.background = 'linear-gradient(90deg, transparent 0%, #d4af37 50%, transparent 100%)';
+                trail.style.transform = 'translateX(-100%)';
+                trail.style.zIndex = '999';
+                trail.style.pointerEvents = 'none';
+                trail.style.animation = 'trailSweep 1s ease-out forwards';
+
+                document.body.appendChild(trail);
+
+                setTimeout(() => {
+                    if (document.body.contains(trail)) {
+                        document.body.removeChild(trail);
+                    }
+                }, 1000);
+
+                // Add trail animation CSS
+                if (!document.querySelector('#trailCSS')) {
+                    const style = document.createElement('style');
+                    style.id = 'trailCSS';
+                    style.textContent = `
+                        @keyframes trailSweep {
+                            0% { transform: translateX(-100%); }
+                            100% { transform: translateX(100%); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+
+            startContinuousEffects() {
+                // Breathing effect for the grimoire
+                setInterval(() => {
+                    const grimoire = document.getElementById('grimoire');
+                    if (grimoire.style.display !== 'none') {
+                        grimoire.style.animation = 'breathe 4s ease-in-out infinite';
+                    }
+                }, 4000);
+
+                // Random magical pulses
+                setInterval(() => {
+                    this.createMagicalPulse();
+                }, 8000);
+
+                // Add breathing and pulse animations
+                if (!document.querySelector('#continuousCSS')) {
+                    const style = document.createElement('style');
+                    style.id = 'continuousCSS';
+                    style.textContent = `
+                        @keyframes breathe {
+                            0%, 100% { 
+                                transform: perspective(1500px) rotateY(5deg) rotateX(2deg) scale(1);
+                                box-shadow: 0 20px 60px rgba(0,0,0,0.9), inset -15px 0 30px rgba(0,0,0,0.5), 0 0 100px rgba(212, 175, 55, 0.2);
+                            }
+                            50% { 
+                                transform: perspective(1500px) rotateY(5deg) rotateX(2deg) scale(1.02);
+                                box-shadow: 0 25px 70px rgba(0,0,0,0.8), inset -15px 0 30px rgba(0,0,0,0.5), 0 0 120px rgba(212, 175, 55, 0.4);
+                            }
+                        }
+                        
+                        @keyframes magicalPulse {
+                            0% { 
+                                opacity: 0;
+                                transform: scale(0.5);
+                            }
+                            50% {
+                                opacity: 0.8;
+                                transform: scale(2);
+                            }
+                            100% {
+                                opacity: 0;
+                                transform: scale(3);
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+
+            createMagicalPulse() {
+                const pulse = document.createElement('div');
+                pulse.style.position = 'fixed';
+                pulse.style.top = '50%';
+                pulse.style.left = '50%';
+                pulse.style.transform = 'translate(-50%, -50%)';
+                pulse.style.width = '100px';
+                pulse.style.height = '100px';
+                pulse.style.borderRadius = '50%';
+                pulse.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%)';
+                pulse.style.border = '2px solid rgba(212, 175, 55, 0.5)';
+                pulse.style.zIndex = '999';
+                pulse.style.pointerEvents = 'none';
+                pulse.style.animation = 'magicalPulse 3s ease-out forwards';
+
+                document.body.appendChild(pulse);
+
+                setTimeout(() => {
+                    if (document.body.contains(pulse)) {
+                        document.body.removeChild(pulse);
+                    }
+                }, 3000);
+            }
+
+            // Method to replace photos (for user customization)
+            replacePhotos(photoArray) {
+                photoArray.forEach((photo, index) => {
+                    const img = document.querySelector(`[data-page="${index}"] .memory-photo`);
+                    const caption = document.querySelector(`[data-page="${index}"] .memory-caption`);
+
+                    if (img && photo.url) {
+                        img.src = photo.url;
+                        img.alt = photo.caption || `Memory ${index + 1}`;
+                    }
+
+                    if (caption && photo.caption) {
+                        caption.textContent = photo.caption;
+                    }
+                });
+            }
+        }
+
+        // Initialize the enchanted memory book
+        document.addEventListener('DOMContentLoaded', function () {
+            const memoryBook = new EnchantedMemoryBook();
+
+            // Example of how to use custom photos (uncomment and modify as needed)
+            /*
+            const customPhotos = [
+                { url: 'path/to/your/photo1.jpg', caption: 'Our first magical moment' },
+                { url: 'path/to/your/photo2.jpg', caption: 'Adventures together' },
+                { url: 'path/to/your/photo3.jpg', caption: 'Creating memories' },
+                // Add more photos as needed
+            ];
+            memoryBook.replacePhotos(customPhotos);
+            */
+        });
+    </script>
+</body>
+
+</html>

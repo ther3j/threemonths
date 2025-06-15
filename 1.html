@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Magical Journey</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #24243e 50%, #302b63 100%);
+            color: #d4af37;
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMTMuMDkgOC4yNkwyMCA5TDEzLjA5IDE1Ljc0TDEyIDIyTDEwLjkxIDE1Ljc0TDQgOUwxMC45MSA4LjI2TDEyIDJaIiBmaWxsPSIjZDRhZjM3Ii8+Cjwvc3ZnPgo='), auto;
+        }
+
+        .audio-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(212, 175, 55, 0.4);
+            transform: scale(1.1);
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(44, 24, 16, 0.9);
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .nav-item {
+            display: block;
+            color: #d4af37;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-item:hover {
+            background: #d4af37;
+            color: #2c1810;
+            transform: translateX(5px);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 24px;
+            animation: float 8s infinite linear;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            padding-top: 4rem;
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px #d4af37;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px #d4af37, 0 0 30px #d4af37;
+            }
+
+            to {
+                text-shadow: 0 0 30px #d4af37, 0 0 40px #d4af37, 0 0 50px #d4af37;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .magic-mirror {
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            border: 10px solid #d4af37;
+            border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+            margin: 2rem auto;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .magic-mirror:hover {
+            transform: scale(1.05);
+            box-shadow: 0 30px 60px rgba(212, 175, 55, 0.4);
+        }
+
+        .mirror-surface {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .mirror-text {
+            color: #d4af37;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 1s ease;
+            font-style: italic;
+            text-shadow: 0 0 10px #d4af37;
+        }
+
+        .mirror-text.visible {
+            opacity: 1;
+        }
+
+        .spell-book {
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            border: 5px solid #d4af37;
+            border-radius: 15px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            margin-bottom: 3rem;
+            transform: perspective(1000px) rotateX(5deg);
+            transition: all 0.3s ease;
+        }
+
+        .spell-book:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+        }
+
+        .spell-book::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #d4af37, #ffd700, #d4af37);
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .spell-content {
+            background: rgba(255, 248, 220, 0.95);
+            color: #2c1810;
+            padding: 2rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .love-potion {
+            background: linear-gradient(45deg, #141b19, #d66d16, #160505);
+            border: 3px solid #161102;
+            border-radius: 50px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: bubble 4s ease-in-out infinite;
+        }
+
+        @keyframes bubble {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .love-potion::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .memory-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            width: 100%;
+        }
+
+        .memory-card {
+            background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 100%);
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .memory-card::after {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: rotate(0deg);
+            }
+
+            50% {
+                opacity: 1;
+                transform: rotate(180deg);
+            }
+        }
+
+        .magical-button {
+            background: linear-gradient(45deg, #d4af37, #ffd700);
+            color: #2c1810;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            margin: 1rem;
+        }
+
+        .magical-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.6);
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+        }
+
+        .hogwarts-letter {
+            background: #f4f1ea;
+            color: #2c1810;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            font-family: 'Crimson Text', serif;
+        }
+
+        .hogwarts-letter::before {
+            content: '🦉';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 3rem;
+            background: #d4af37;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .hidden-message {
+            opacity: 0;
+            transition: opacity 1s ease;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 1px dashed #d4af37;
+        }
+
+        .revealed {
+            opacity: 1;
+        }
+
+        .secret-entrance {
+            position: fixed;
+            bottom: 20px;
+            right: 50px;
+            width: 60px;
+            height: 60px;
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border: 2px solid #d4af37;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .secret-entrance:hover {
+            transform: scale(1.2);
+            background: rgba(212, 175, 55, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .spell-book {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+                padding-top: 6rem;
+            }
+
+            .nav-menu {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .magic-mirror {
+                width: 250px;
+                height: 320px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Audio Control -->
+    <div class="audio-control" id="audioControl" title="Toggle Hedwig's Theme">🎵</div>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <a href="gallery.html" target="_blank" class="nav-item">🏰 Secret Album</a>
+        <!-- <a href="javascript:openTimeline()" class="nav-item">📰 Daily Prophet</a> -->
+        <a href="dailyprophet.html" target="_blank" class="nav-item">📰 Daily Prophet</a>
+        <a href="javascript:openPatronus()" class="nav-item">🦌 Patronus Generator</a>
+        <a href="room.html" class="nav-item">🚪 Room of Requirement</a>
+    </nav>
+    <!-- Secret Room Entrance -->
+    <a href="room.html" class="nav-item">🚪 Room of Requirement</a>
+    <!-- <div class="secret-entrance" onclick="openRoomOfRequirement()" title="Room of Requirement">🗝️</div> -->
+    <div class="stars" id="stars"></div>
+    <div class="floating-elements" id="floatingElements"></div>
+    <div class="container">
+        <h1 class="title">Our Magical Journey</h1>
+        <p class="subtitle">Three Months of Pure Magic ✨</p>
+        <!-- Magic Mirror -->
+        <div class="magic-mirror" onclick="showMirrorMessage()">
+            <div class="mirror-surface">
+                <div class="mirror-text" id="mirrorText">
+                    Click to see what the Mirror of Erised shows...
+                </div>
+            </div>
+        </div>
+        <div class="spell-book">
+            <div class="spell-content">
+                <h2 style="font-family: 'Cinzel', serif; margin-bottom: 1rem; color: #8b4513;">The Love Spell Chronicles
+                </h2>
+                <p>In the enchanted halls of our hearts, a spell was cast exactly three months ago. Not by wand or
+                    potion, but by the magic of your smile, the charm of your laughter, and the wizardry of your love.
+                </p>
+                <p style="margin-top: 1rem; font-style: italic;">"It is our choices that show what we truly are, far
+                    more than our abilities." - And I choose you, every magical day.</p>
+            </div>
+        </div>
+        <div class="love-potion">
+            <h3 style="font-family: 'Cinzel', serif; margin-bottom: 1rem;">🧪 Love Potion Ingredients 🧪</h3>
+            <p><strong>3 months</strong> of stolen glances and shared dreams</p>
+            <p><strong>Countless hours</strong> of laughter and joy</p>
+            <p><strong>A pinch</strong> of mischief and adventure</p>
+            <p><strong>One whole heart</strong> completely devoted to you</p>
+            <p style="margin-top: 1rem; font-style: italic;">*Side effects may include: permanent smiling, butterflies,
+                and an irresistible urge to be together forever*</p>
+        </div>
+        <div class="memory-gallery">
+            <div class="memory-card" onclick="revealMemory(1)">
+                <h4>First Month</h4>
+                <p>The Sorting Hat's Decision</p>
+                <div class="hidden-message" id="memory1">
+                    "The moment I knew you belonged in my heart's Gryffindor house - brave enough to love and be loved."
+                </div>
+            </div>
+            <div class="memory-card" onclick="revealMemory(2)">
+                <h4>Second Month</h4>
+                <p>Quidditch of the Heart</p>
+                <div class="hidden-message" id="memory2">
+                    "You caught my heart like a Golden Snitch - swift, precious, and impossible to let go."
+                </div>
+            </div>
+            <div class="memory-card" onclick="revealMemory(3)">
+                <h4>Third Month</h4>
+                <p>The Patronus Charm</p>
+                <div class="hidden-message" id="memory3">
+                    "Your love is my Patronus - the brightest light that drives away all darkness and fear."
+                </div>
+            </div>
+        </div>
+        <div class="hogwarts-letter">
+            <h3 style="font-family: 'Cinzel', serif; text-align: center; margin-bottom: 1rem;">Official Hogwarts Letter
+            </h3>
+            <p><strong>Dear Amazing Vency, (the famous earthy wizard)</strong></p>
+            <b></b>
+            <p>As we have observed that you casted your spell on this ordinary boy, and transformed him to a man, so We
+                are pleased to inform you that you have been accepted to the School of My Heart and Wizardry.</p>
+            <p> Your magical powers include:</p>
+            <ul style="margin: 1rem 0; text-align: left;">
+                <li>Making ordinary moments extraordinary</li>
+                <li>Casting happiness spells with just a smile</li>
+                <li>Brewing the perfect potion of love and laughter</li>
+                <li>Possessing the rare ability to make time stop</li>
+            </ul>
+            <p>Term begins with our fourth month together and continues for a lifetime.</p>
+            <p style="text-align: right; margin-top: 1rem;"><em>Yours truly,<br>Your Devoted Wizard, VENCY'S RAJ 🪄</em>
+            </p>
+        </div>
+        <button class="magical-button" onclick="castSpell()">Cast a Love Spell ✨</button>
+        <button class="magical-button" onclick="showProphecy()">Reveal Our Future 🔮</button>
+        <div class="hidden-message" id="prophecy" style="text-align: center; font-size: 1.3rem; margin-top: 2rem;">
+            <h3 style="font-family: 'Cinzel', serif; color: #d4af37;">The Prophecy of Us</h3>
+            <p style="font-style: italic; margin-top: 1rem;">
+                "In the stars it is written, in the magic it is sealed - two hearts that beat as one, a love that time
+                cannot steal. Through seasons of joy and chapters untold, our story grows stronger, our bond more bold.
+                The prophecy speaks of forever true, of a love that's magical - me and you."
+            </p>
+            <img id="prophecyImage" src="photos/ourfuture.png" alt="Our Future"
+                style="display:none; margin-top: 1.5rem; max-width: 500px; align-content: center; border-radius: 15px; box-shadow: 0 0 20px #d4af37;">
+        </div>
+    </div>
+    <!-- Audio Element -->
+    <audio id="hedwigTheme" loop>
+        <source src="hedwig.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        let audioPlaying = false;
+        let mirrorMessageIndex = 0;
+        const mirrorMessages = [
+            "I see the most beautiful person in the wizarding world...",
+            "The mirror shows someone who makes my heart skip beats...",
+            "I see a future filled with love, laughter, and endless adventures...",
+            "The mirror reveals the keeper of my heart and soul...",
+            "I see someone who makes every day feel like magic...",
+            "The mirror shows my greatest treasure - you...",
+            "I see the reason I believe in fairy tales...",
+            "The mirror reveals the love of my lifetime..."
+        ];
+
+        // Audio control
+        // ...existing code...
+        function toggleAudio() {
+            const audio = document.getElementById('hedwigTheme');
+            const audioControl = document.getElementById('audioControl');
+            if (audioPlaying) {
+                audio.pause();
+                audioControl.textContent = '🎵';
+                audioPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    audioControl.textContent = '🔇';
+                    audioPlaying = true;
+                }).catch((err) => {
+                    alert("Audio playback was blocked by your browser. Please interact with the page (click anywhere) and try again.");
+                    audioControl.textContent = '🎵';
+                    audioPlaying = false;
+                });
+            }
+        }
+        // ...existing code...
+
+        // Magic Mirror function
+        function showMirrorMessage() {
+            const mirrorText = document.getElementById('mirrorText');
+            mirrorText.classList.remove('visible');
+            setTimeout(() => {
+                mirrorText.textContent = mirrorMessages[mirrorMessageIndex];
+                mirrorText.classList.add('visible');
+                mirrorMessageIndex = (mirrorMessageIndex + 1) % mirrorMessages.length;
+            }, 300);
+            createMirrorSparkles();
+        }
+        function createMirrorSparkles() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = (window.innerWidth / 2 + Math.random() * 400 - 200) + 'px';
+                    sparkle.style.top = (window.innerHeight / 2 + Math.random() * 300 - 150) + 'px';
+                    sparkle.style.fontSize = '1.5rem';
+                    sparkle.style.zIndex = '1000';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.color = '#d4af37';
+                    sparkle.textContent = '✨';
+                    sparkle.style.animation = 'sparkle 2s ease-out forwards';
+                    document.body.appendChild(sparkle);
+                    setTimeout(() => {
+                        if (document.body.contains(sparkle)) {
+                            document.body.removeChild(sparkle);
+                        }
+                    }, 2000);
+                }, i * 100);
+            }
+        }
+        function showProphecy() {
+            const prophecy = document.getElementById('prophecy');
+            prophecy.classList.add('revealed');
+            prophecy.scrollIntoView({ behavior: 'smooth' });
+            const img = document.getElementById('prophecyImage');
+            if (img) img.style.display = 'block';
+        }
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const elements = ['✨', '🌟', '💫', '⭐', '🔮', '🪄', '🦉', '💝'];
+            setInterval(() => {
+                if (container.children.length < 20) {
+                    const element = document.createElement('div');
+                    element.className = 'floating-element';
+                    element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                    element.style.left = Math.random() * 100 + '%';
+                    element.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    element.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                    container.appendChild(element);
+                    setTimeout(() => {
+                        if (container.contains(element)) {
+                            container.removeChild(element);
+                        }
+                    }, 13000);
+                }
+            }, 1000);
+        }
+        function revealMemory(memoryNumber) {
+            const memory = document.getElementById('memory' + memoryNumber);
+            memory.classList.add('revealed');
+            const card = memory.parentElement;
+            card.style.background = 'linear-gradient(135deg, #d4af37 0%, #ffd700 100%)';
+            card.style.color = '#2c1810';
+            setTimeout(() => {
+                card.style.background = 'linear-gradient(135deg, #2c1810 0%, #4a2c1a 100%)';
+                card.style.color = '#d4af37';
+            }, 3000);
+        }
+        function castSpell() {
+            const messages = [
+                "✨ Wingardium Leviosa! Your heart has been lifted with love!",
+                "🪄 Expecto Patronum! A burst of happiness surrounds you!",
+                "💫 Alohomora! The door to my heart is forever open for you!",
+                "🌟 Lumos! You light up my entire world!",
+                "💝 Accio Love! You've summoned all the love in my heart!"
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            alert(randomMessage);
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = Math.random() * window.innerWidth + 'px';
+                    sparkle.style.top = Math.random() * window.innerHeight + 'px';
+                    sparkle.style.fontSize = '2rem';
+                    sparkle.style.zIndex = '1000';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.textContent = '✨';
+                    sparkle.style.animation = 'sparkle 2s ease-out forwards';
+                    document.body.appendChild(sparkle);
+                    setTimeout(() => {
+                        if (document.body.contains(sparkle)) {
+                            document.body.removeChild(sparkle);
+                        }
+                    }, 2000);
+                }, i * 100);
+            }
+            // }
+            // // Timeline popup
+            // function openTimeline() {
+            //     const timeline = document.createElement('div');
+            //     timeline.style.position = 'fixed';
+            //     timeline.style.top = '50%';
+            //     timeline.style.left = '50%';
+            //     timeline.style.transform = 'translate(-50%, -50%)';
+            //     timeline.style.width = '80%';
+            //     timeline.style.maxWidth = '800px';
+            //     timeline.style.backgroundColor = '#f4f1ea';
+            //     timeline.style.border = '5px solid #d4af37';
+            //     timeline.style.borderRadius = '15px';
+            //     timeline.style.padding = '2rem';
+            //     timeline.style.zIndex = '10000';
+            //     timeline.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.8)';
+            //     timeline.style.color = '#2c1810';
+            //     timeline.style.fontFamily = "'Crimson Text', serif";
+            //     timeline.style.overflowY = 'auto';
+            //     timeline.style.maxHeight = '80vh';
+            //     timeline.innerHTML = `
+            //         <div style="text-align: right;">
+            //             <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✖</button>
+            //         </div>
+            //         <h2 style="font-family: 'Cinzel', serif; text-align: center; color: #8b4513; margin-bottom: 1.5rem;">Our Magical Timeline</h2>
+            //         <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            //             <div style="display: flex; align-items: center; background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 10px; border-left: 5px solid #d4af37;">
+            //                 <div style="font-size: 2rem; margin-right: 1rem;">🦉</div>
+            //                 <div>
+            //                     <h3 style="font-family: 'Cinzel', serif; margin-bottom: 0.5rem;">First Enchantment</h3>
+            //                     <p>The day our wands first crossed and sparks flew - the beginning of our magical journey.</p>
+            //                 </div>
+            //             </div>
+            //             <div style="display: flex; align-items: center; background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 10px; border-left: 5px solid #d4af37;">
+            //                 <div style="font-size: 2rem; margin-right: 1rem;">💞</div>
+            //                 <div>
+            //                     <h3 style="font-family: 'Cinzel', serif; margin-bottom: 0.5rem;">The Sorting Hat's Choice</h3>
+            //                     <p>When we both chose to be in the same house - the house of love and devotion.</p>
+            //                 </div>
+            //             </div>
+            //             <div style="display: flex; align-items: center; background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 10px; border-left: 5px solid #d4af37;">
+            //                 <div style="font-size: 2rem; margin-right: 1rem;">🪄</div>
+            //                 <div>
+            //                     <h3 style="font-family: 'Cinzel', serif; margin-bottom: 0.5rem;">Patronus Connection</h3>
+            //                     <p>The moment we discovered our Patronuses were perfectly matched - complementary forms of happiness.</p>
+            //                 </div>
+            //             </div>
+            //             <div style="display: flex; align-items: center; background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 10px; border-left: 5px solid #d4af37;">
+            //                 <div style="font-size: 2rem; margin-right: 1rem;">🏰</div>
+            //                 <div>
+            //                     <h3 style="font-family: 'Cinzel', serif; margin-bottom: 0.5rem;">Hogwarts Date</h3>
+            //                     <p>Our magical date that felt like walking through the halls of Hogwarts together.</p>
+            //                 </div>
+            //             </div>
+            //             <div style="display: flex; align-items: center; background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 10px; border-left: 5px solid #d4af37;">
+            //                 <div style="font-size: 2rem; margin-right: 1rem;">🔮</div>
+            //                 <div>
+            //                     <h3 style="font-family: 'Cinzel', serif; margin-bottom: 0.5rem;">Future Predictions</h3>
+            //                     <p>All the magical moments yet to come in our extraordinary journey together.</p>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //         <div style="text-align: center; margin-top: 2rem;">
+            //             <button onclick="this.parentElement.parentElement.remove()" class="magical-button">Close</button>
+            //         </div>
+            //     `;
+            //     document.body.appendChild(timeline);
+            //     timeline.style.opacity = '0';
+            //     timeline.style.transform = 'translate(-50%, -40%)';
+            //     setTimeout(() => {
+            //         timeline.style.transition = 'all 0.5s ease';
+            //         timeline.style.opacity = '1';
+            //         timeline.style.transform = 'translate(-50%, -50%)';
+            //     }, 10);
+        }
+        // Patronus popup
+        function openPatronus() {
+            const patronus = document.createElement('div');
+            patronus.style.position = 'fixed';
+            patronus.style.top = '50%';
+            patronus.style.left = '50%';
+            patronus.style.transform = 'translate(-50%, -50%)';
+            patronus.style.width = '80%';
+            patronus.style.maxWidth = '600px';
+            patronus.style.backgroundColor = '#0f0c29';
+            patronus.style.border = '5px solid #d4af37';
+            patronus.style.borderRadius = '15px';
+            patronus.style.padding = '2rem';
+            patronus.style.zIndex = '10000';
+            patronus.style.boxShadow = '0 0 30px rgba(212, 175, 55, 0.8)';
+            patronus.style.color = '#d4af37';
+            patronus.style.fontFamily = "'Crimson Text', serif";
+            patronus.style.textAlign = 'center';
+            patronus.innerHTML = `
+                <div style="text-align: right;">
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #d4af37;">✖</button>
+                </div>
+                <h2 style="font-family: 'Cinzel', serif; margin-bottom: 1.5rem;">Patronus Generator</h2>
+                <p style="margin-bottom: 1.5rem;">"The Patronus is a kind of positive force, a projection of the very things that the Dementor feeds upon — hope, happiness, the desire to survive — but it cannot feel despair, as real humans can, so the Dementors can't hurt it."</p>
+                <div id="patronusResult" style="font-size: 8rem; margin: 1.5rem 0; min-height: 150px;"></div>
+                <button onclick="generatePatronus()" class="magical-button" style="margin: 1rem auto;">Generate Our Patronuses</button>
+                <div id="patronusMessage" style="margin-top: 1.5rem; font-style: italic;"></div>
+            `;
+            document.body.appendChild(patronus);
+            patronus.style.opacity = '0';
+            patronus.style.transform = 'translate(-50%, -40%)';
+            setTimeout(() => {
+                patronus.style.transition = 'all 0.5s ease';
+                patronus.style.opacity = '1';
+                patronus.style.transform = 'translate(-50%, -50%)';
+            }, 10);
+        }
+        // function generatePatronus() {
+        //     const patronuses = [
+        //         { emoji: '🦌', name: 'Stag' }, { emoji: '🐺', name: 'Wolf' },
+        //         { emoji: '🦢', name: 'Swan' }, { emoji: '🐇', name: 'Rabbit' },
+        //         { emoji: '🦊', name: 'Fox' }, { emoji: '🐬', name: 'Dolphin' },
+        //         { emoji: '🦅', name: 'Eagle' }, { emoji: '🐈', name: 'Cat' },
+        //         { emoji: '🦉', name: 'Owl' }, { emoji: '🐘', name: 'Elephant' }
+        //     ];
+        //     const resultDiv = document.getElementById('patronusResult');
+        //     const messageDiv = document.getElementById('patronusMessage');
+        //     resultDiv.innerHTML = '⚡';
+        //     let count = 0;
+        //     const loadingInterval = setInterval(() => {
+        //         resultDiv.textContent += '⚡';
+        //         if (++count > 5) {
+        //             resultDiv.textContent = '⚡';
+        //             count = 0;
+        //         }
+        //     }, 200);
+        //     setTimeout(() => {
+        //         clearInterval(loadingInterval);
+        //         const index1 = Math.floor(Math.random() * patronuses.length);
+        //         let index2;
+        //         do { index2 = Math.floor(Math.random() * patronuses.length); } while (index2 === index1);
+        //         const patronus1 = patronuses[index1];
+        //         const patronus2 = patronuses[index2];
+        //         resultDiv.innerHTML = `${patronus1.emoji} + ${patronus2.emoji}`;
+        //         const messages = [
+        //             `"A ${patronus1.name} and ${patronus2.name} - perfectly complementary, just like us."`,
+        //             `"The ${patronus1.name} represents your strength, while the ${patronus2.name} symbolizes my devotion."`,
+        //             `"Together, our ${patronus1.name} and ${patronus2.name} Patronuses create an unbreakable shield of love."`,
+        //             `"The ${patronus1.name} and ${patronus2.name} are rare and beautiful, just like our connection."`,
+        //             `"In the magical world, ${patronus1.name} and ${patronus2.name} Patronuses are said to be soulmates."`
+        //         ];
+        //         const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        //         messageDiv.innerHTML = randomMessage;
+        //         for (let i = 0; i < 10; i++) {
+        //             setTimeout(() => {
+        //                 const sparkle = document.createElement('span');
+        //                 sparkle.style.position = 'absolute';
+        //                 sparkle.style.left = Math.random() * 100 + '%';
+        //                 sparkle.style.top = Math.random() * 100 + '%';
+        //                 sparkle.style.fontSize = '1.5rem';
+        //                 sparkle.style.zIndex = '1001';
+        //                 sparkle.style.pointerEvents = 'none';
+        //                 sparkle.textContent = '✨';
+        //                 sparkle.style.animation = 'sparkle 1s ease-out forwards';
+        //                 resultDiv.appendChild(sparkle);
+        //                 setTimeout(() => {
+        //                     if (resultDiv.contains(sparkle)) {
+        //                         resultDiv.removeChild(sparkle);
+        //                     }
+        //                 }, 1000);
+        //             }, i * 100);
+        //         }
+        //     }, 1500);
+        // }
+        function generatePatronus() {
+            const traits = {
+                // Personality traits
+                brave: ["Lion", "Griffin", "Dragon"],
+                loyal: ["Dog", "Wolf", "Stag"],
+                playful: ["Otter", "Dolphin", "Fox"],
+                wise: ["Owl", "Raven", "Elephant"],
+                kind: ["Doe", "Swan", "Butterfly"],
+                // Inside jokes / personalization
+                insideJoke: ["Pumpkin-Furred", "Coffee-Brewing", "Pajama-Clad", "Netflix-Binging"],
+                // Magical twists
+                magical: ["Starlit", "Moon-Touched", "Golden", "Silver", "Enchanted"],
+                hybrid: ["Phoenix-Wolf", "Dragon-Owl", "Mermaid-Cat"]
+            };
+
+            // Randomly select a combination
+            const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+            const patronusType = Math.random() > 0.7 ?
+                `${getRandom(traits.magical)} ${getRandom(traits.hybrid)}` : // 30% chance of a magical hybrid
+                `${getRandom(traits.magical)} ${getRandom([...traits.brave, ...traits.loyal, ...traits.playful])}`; // 70% chance of a standard but enchanted Patronus
+
+            const patronusEmoji = {
+                Lion: "🦁", Griffin: "🦅", Dragon: "🐉", Dog: "🐕", Wolf: "🐺",
+                Stag: "🦌", Otter: "🦦", Dolphin: "🐬", Fox: "🦊", Owl: "🦉",
+                Raven: "🐦‍⬛", Elephant: "🐘", Doe: "🐇", Swan: "🦢", Butterfly: "🦋",
+                Phoenix: "🦅🔥", Mermaid: "🧜‍♀️", Cat: "🐈"
+            }[patronusType.split(" ").pop()] || "✨"; // Fallback to sparkles
+
+            // Romantic description based on the Patronus
+            const descriptions = [
+                `"A ${patronusType} appears when you think of each other—proof that your love is pure magic."`,
+                `"The ${patronusType} is rare, just like your bond. Only soulmates conjure this form."`,
+                `"In the Patronus Registry, ${patronusType} is listed as 'The Lovers' Light.'"`,
+                `"Legends say a ${patronusType} appears when two hearts beat as one."`
+            ];
+
+            // Display the result
+            const resultDiv = document.getElementById('patronusResult');
+            const messageDiv = document.getElementById('patronusMessage');
+
+            resultDiv.innerHTML = `${patronusEmoji} ${patronusType}`;
+            messageDiv.innerHTML = getRandom(descriptions);
+
+            // Sparkle effect
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('span');
+                    sparkle.style.position = 'absolute';
+                    sparkle.style.left = `${Math.random() * 100}%`;
+                    sparkle.style.top = `${Math.random() * 100}%`;
+                    sparkle.style.fontSize = '1.5rem';
+                    sparkle.textContent = '✨';
+                    sparkle.style.animation = 'sparkle 1s forwards';
+                    resultDiv.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 1000);
+                }, i * 100);
+            }
+        }
+        // Room of Requirement popup
+        function openRoomOfRequirement() {
+            const room = document.createElement('div');
+            room.style.position = 'fixed';
+            room.style.top = '0';
+            room.style.left = '0';
+            room.style.width = '100%';
+            room.style.height = '100%';
+            room.style.backgroundColor = 'rgba(15, 12, 41, 0.95)';
+            room.style.zIndex = '10000';
+            room.style.display = 'flex';
+            room.style.flexDirection = 'column';
+            room.style.alignItems = 'center';
+            room.style.justifyContent = 'center';
+            room.style.color = '#d4af37';
+            room.style.fontFamily = "'Crimson Text', serif";
+            room.style.overflow = 'auto';
+            room.style.padding = '2rem';
+            room.innerHTML = `
+                <div style="text-align: right; width: 100%; max-width: 800px;">
+                    <button onclick="this.parentElement.parentElement.remove();document.body.style.overflow='auto';" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #d4af37; position: absolute; top: 20px; right: 20px;">✖</button>
+                </div>
+                <h2 style="font-family: 'Cinzel', serif; margin-bottom: 1.5rem; text-align: center;">The Room of Requirement</h2>
+                <p style="margin-bottom: 2rem; text-align: center; max-width: 600px;">"The Room of Requirement only appears when a witch or wizard has real need of it. It is always equipped for the seeker's needs." Here's what our hearts require today:</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="room-item" style="background: rgba(212, 175, 55, 0.1); border: 2px solid #d4af37; border-radius: 15px; padding: 1.5rem; width: 250px; text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="showRoomContent(1)">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">💌</div>
+                        <h3 style="font-family: 'Cinzel', serif;">Secret Letters</h3>
+                    </div>
+                    <div class="room-item" style="background: rgba(212, 175, 55, 0.1); border: 2px solid #d4af37; border-radius: 15px; padding: 1.5rem; width: 250px; text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="showRoomContent(2)">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+                        <h3 style="font-family: 'Cinzel', serif;">Memory Gallery</h3>
+                    </div>
+                    <div class="room-item" style="background: rgba(212, 175, 55, 0.1); border: 2px solid #d4af37; border-radius: 15px; padding: 1.5rem; width: 250px; text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="showRoomContent(3)">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎶</div>
+                        <h3 style="font-family: 'Cinzel', serif;">Our Theme Song</h3>
+                    </div>
+                    <div class="room-item" style="background: rgba(212, 175, 55, 0.1); border: 2px solid #d4af37; border-radius: 15px; padding: 1.5rem; width: 250px; text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="showRoomContent(4)">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔮</div>
+                        <h3 style="font-family: 'Cinzel', serif;">Future Visions</h3>
+                    </div>
+                </div>
+                <div id="roomContent" style="max-width: 800px; width: 100%;"></div>
+            `;
+            document.body.appendChild(room);
+            document.body.style.overflow = 'hidden';
+            // Floating candles
+            const candlesContainer = document.createElement('div');
+            candlesContainer.style.position = 'fixed';
+            candlesContainer.style.top = '0';
+            candlesContainer.style.left = '0';
+            candlesContainer.style.width = '100%';
+            candlesContainer.style.height = '100%';
+            candlesContainer.style.pointerEvents = 'none';
+            candlesContainer.style.zIndex = '10001';
+            room.appendChild(candlesContainer);
+            for (let i = 0; i < 20; i++) {
+                const candle = document.createElement('div');
+                candle.style.position = 'absolute';
+                candle.style.left = Math.random() * 100 + '%';
+                candle.style.top = Math.random() * 100 + '%';
+                candle.style.fontSize = '1.5rem';
+                candle.textContent = '🕯️';
+                candle.style.animation = `float ${Math.random() * 3 + 3}s infinite ease-in-out`;
+                candlesContainer.appendChild(candle);
+            }
+        }
+        function showRoomContent(option) {
+            const roomContent = document.getElementById('roomContent');
+            roomContent.innerHTML = '<div style="text-align: center; font-size: 2rem;">⚡</div>';
+            let count = 0;
+            const loadingInterval = setInterval(() => {
+                roomContent.firstChild.textContent += '⚡';
+                if (++count > 5) {
+                    roomContent.firstChild.textContent = '⚡';
+                    count = 0;
+                }
+            }, 200);
+            setTimeout(() => {
+                clearInterval(loadingInterval);
+                switch (option) {
+                    case 1:
+                        roomContent.innerHTML = `
+                            <div style="background: rgba(212, 175, 55, 0.1); border: 2px dashed #d4af37; border-radius: 15px; padding: 2rem;">
+                                <h3 style="font-family: 'Cinzel', serif; text-align: center; margin-bottom: 1.5rem;">Secret Letters</h3>
+                                <div style="margin-bottom: 1.5rem;">
+                                    <p><strong>My Dearest Love,</strong></p>
+                                    <p>If I could send you a Howler, it wouldn't shout - it would sing the sweetest melody about how much you mean to me. Every day with you feels like a page from a magical storybook.</p>
+                                    <p style="text-align: right; margin-top: 1rem;"><em>Yours always,<br>Your Secret Admirer</em></p>
+                                </div>
+                                <div style="margin-bottom: 1.5rem;">
+                                    <p><strong>To My Favorite Witch,</strong></p>
+                                    <p>They say love is the most powerful magic of all, and with you, I've experienced spells more wonderful than anything taught at Hogwarts. You've enchanted my heart completely.</p>
+                                    <p style="text-align: right; margin-top: 1rem;"><em>Forever under your spell,<br>Your Devoted Wizard</em></p>
+                                </div>
+                                <button onclick="addNewLetter()" class="magical-button" style="margin: 0 auto; display: block;">Add New Letter</button>
+                            </div>
+                        `;
+                        break;
+                    case 2:
+                        roomContent.innerHTML = `
+                            <div style="background: rgba(212, 175, 55, 0.1); border: 2px dashed #d4af37; border-radius: 15px; padding: 2rem;">
+                                <h3 style="font-family: 'Cinzel', serif; text-align: center; margin-bottom: 1.5rem;">Memory Gallery</h3>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                                    <div style="background: #2c1810; border: 1px solid #d4af37; border-radius: 10px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🦉</div>
+                                    <div style="background: #2c1810; border: 1px solid #d4af37; border-radius: 10px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">💞</div>
+                                    <div style="background: #2c1810; border: 1px solid #d4af37; border-radius: 10px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🏰</div>
+                                    <div style="background: #2c1810; border: 1px solid #d4af37; border-radius: 10px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🪄</div>
+                                    <div style="background: #2c1810; border: 1px solid #d4af37; border-radius: 10px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">✨</div>
+                                    <div style="background: #2c1810; border: 1px solid #d4af37; border-radius: 10px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🔮</div>
+                                </div>
+                                <p style="text-align: center; font-style: italic;">"These magical symbols represent our most precious memories together. Each one tells a story only we know."</p>
+                                <button onclick="addNewMemory()" class="magical-button" style="margin: 1.5rem auto 0; display: block;">Add New Memory</button>
+                            </div>
+                        `;
+                        break;
+                    case 3:
+                        roomContent.innerHTML = `
+                            <div style="background: rgba(212, 175, 55, 0.1); border: 2px dashed #d4af37; border-radius: 15px; padding: 2rem; text-align: center;">
+                                <h3 style="font-family: 'Cinzel', serif; margin-bottom: 1.5rem;">Our Theme Song</h3>
+                                <div style="font-size: 5rem; margin: 1.5rem 0;">🎼</div>
+                                <p style="margin-bottom: 1.5rem;">"Music is a magic beyond all we do here at Hogwarts. And our love has its own magical melody."</p>
+                                <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 300px; margin: 0 auto;">
+                                    <button onclick="playSong('hedwig')" class="magical-button">Hedwig's Theme</button>
+                                    <button onclick="playSong('love')" class="magical-button">Love Theme</button>
+                                    <button onclick="playSong('magical')" class="magical-button">Magical Melody</button>
+                                </div>
+                                <div id="songLyrics" style="margin-top: 2rem; font-style: italic; display: none;">
+                                    <p>Every whisper of your voice is a spell,</p>
+                                    <p>Every glance from your eyes tells a tale,</p>
+                                    <p>In this magical world we've created,</p>
+                                    <p>Our love song will never fade.</p>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 4:
+                        roomContent.innerHTML = `
+                            <div style="background: rgba(212, 175, 55, 0.1); border: 2px dashed #d4af37; border-radius: 15px; padding: 2rem; text-align: center;">
+                                <h3 style="font-family: 'Cinzel', serif; margin-bottom: 1.5rem;">Future Visions</h3>
+                                <div style="font-size: 5rem; margin: 1.5rem 0;">🔮</div>
+                                <div style="text-align: left; margin-bottom: 1.5rem;">
+                                    <p>The crystal ball reveals glimpses of our future:</p>
+                                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                                        <li>Countless adventures together</li>
+                                        <li>Laughter that echoes through time</li>
+                                        <li>Moments of quiet magic</li>
+                                        <li>A love that grows stronger with each passing season</li>
+                                        <li>Shared dreams becoming reality</li>
+                                    </ul>
+                                </div>
+                                <p style="font-style: italic;">"The future is always uncertain, but one thing is clear - it's ours to write together."</p>
+                                <button onclick="revealProphecy()" class="magical-button" style="margin-top: 1.5rem;">Reveal Full Prophecy</button>
+                                <div id="fullProphecy" style="display: none; margin-top: 1.5rem; font-style: italic;">
+                                    <p>"When two hearts beat as one under the enchanted sky,</p>
+                                    <p>A love so pure no magic can deny,</p>
+                                    <p>Through seasons of joy and trials few,</p>
+                                    <p>Their bond will strengthen, ever true.</p>
+                                    <p>Not even time can break this spell,</p>
+                                    <p>For theirs is a tale the stars foretell."</p>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                }
+                roomContent.style.opacity = '0';
+                roomContent.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    roomContent.style.transition = 'all 0.5s ease';
+                    roomContent.style.opacity = '1';
+                    roomContent.style.transform = 'translateY(0)';
+                }, 10);
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.style.position = 'absolute';
+                        sparkle.style.left = (roomContent.offsetLeft + Math.random() * roomContent.offsetWidth) + 'px';
+                        sparkle.style.top = (roomContent.offsetTop + Math.random() * roomContent.offsetHeight) + 'px';
+                        sparkle.style.fontSize = '1.5rem';
+                        sparkle.style.zIndex = '1001';
+                        sparkle.style.pointerEvents = 'none';
+                        sparkle.textContent = '✨';
+                        sparkle.style.animation = 'sparkle 1s ease-out forwards';
+                        roomContent.appendChild(sparkle);
+                        setTimeout(() => {
+                            if (roomContent.contains(sparkle)) {
+                                roomContent.removeChild(sparkle);
+                            }
+                        }, 1000);
+                    }, i * 100);
+                }
+            }, 1500);
+        }
+        function addNewLetter() {
+            alert("This magical quill will let you write your own love letter! (Feature coming soon with more magic!)");
+        }
+        function addNewMemory() {
+            alert("Add your favorite memory to our collection! (More magical features coming soon!)");
+        }
+        function playSong(songType) {
+            const lyrics = document.getElementById('songLyrics');
+            if (lyrics) {
+                lyrics.style.display = 'block';
+                lyrics.style.animation = 'fadeIn 1s ease';
+            }
+            alert(`Playing our ${songType.replace('-', ' ')} song!`);
+        }
+        function revealProphecy() {
+            const prophecy = document.getElementById('fullProphecy');
+            if (prophecy) {
+                prophecy.style.display = 'block';
+                prophecy.style.animation = 'fadeIn 1.5s ease';
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('span');
+                        sparkle.style.position = 'absolute';
+                        sparkle.style.left = (prophecy.offsetLeft + Math.random() * prophecy.offsetWidth) + 'px';
+                        sparkle.style.top = (prophecy.offsetTop + Math.random() * prophecy.offsetHeight) + 'px';
+                        sparkle.style.fontSize = '1.5rem';
+                        sparkle.style.zIndex = '1001';
+                        sparkle.style.pointerEvents = 'none';
+                        sparkle.textContent = '✨';
+                        sparkle.style.animation = 'sparkle 1s ease-out forwards';
+                        prophecy.appendChild(sparkle);
+                        setTimeout(() => {
+                            if (prophecy.contains(sparkle)) {
+                                prophecy.removeChild(sparkle);
+                            }
+                        }, 1000);
+                    }, i * 150);
+                }
+            }
+        }
+        window.onload = function () {
+            createStars();
+            createFloatingElements();
+            document.getElementById('audioControl').addEventListener('click', toggleAudio);
+            document.addEventListener('mousemove', function (e) {
+                if (Math.random() < 0.1) {
+                    const trail = document.createElement('div');
+                    trail.style.position = 'fixed';
+                    trail.style.left = e.clientX + 'px';
+                    trail.style.top = e.clientY + 'px';
+                    trail.style.fontSize = '12px';
+                    trail.style.pointerEvents = 'none';
+                    trail.style.zIndex = '999';
+                    trail.style.color = '#d4af37';
+                    trail.textContent = '✨';
+                    trail.style.animation = 'sparkle 1s ease-out forwards';
+                    document.body.appendChild(trail);
+                    setTimeout(() => {
+                        if (document.body.contains(trail)) {
+                            document.body.removeChild(trail);
+                        }
+                    }, 1000);
+                }
+            });
+        };
+
+
+    </script>
+    <!-- Add this just before the closing </body> tag -->
+   <button class="magical-button" style="
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1200;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+" onclick="window.location.href='daily.html'">
+    Click for Personal Endorsement
+</button>
+</body>
+
+</html>

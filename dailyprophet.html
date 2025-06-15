@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Daily Prophet - Love Chronicles</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;1,400&family=Old+Standard+TT:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .timeline-article .photo-placeholder {
+            border: none !important;
+            background: transparent !important;
+        }
+
+        body {
+            font-family: 'Old Standard TT', serif;
+            background: linear-gradient(135deg, #2c1810 0%, #3d2817 50%, #4a2c1a 100%);
+            color: #2c1810;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        .newspaper-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #f4f1ea;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .newspaper-header {
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            color: #d4af37;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 5px solid #d4af37;
+            position: relative;
+        }
+
+        .newspaper-header::before {
+            content: '🦉 🦉 🦉';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+        }
+
+        .daily-prophet-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .newspaper-subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .newspaper-date {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: #d4af37;
+            color: #2c1810;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #ffd700;
+            transform: scale(1.05);
+        }
+
+        .newspaper-content {
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .main-article {
+            grid-column: 1 / -1;
+            border-bottom: 3px solid #d4af37;
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-headline {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #8b4513;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-byline {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            columns: 2;
+            column-gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-article {
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fff9e6 0%, #f4f1ea 100%);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .timeline-article::before {
+            content: attr(data-month);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: #d4af37;
+            color: #2c1810;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .timeline-headline {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #8b4513;
+        }
+
+        .timeline-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .magical-quote {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #d4af37;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .magical-quote::before {
+            content: '"';
+            font-size: 3rem;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+        }
+
+        .magical-quote::after {
+            content: '"';
+            font-size: 3rem;
+            position: absolute;
+            bottom: -20px;
+            right: 10px;
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            font-size: 3rem;
+            color: #2c1810;
+        }
+
+        .weather-section {
+            background: rgba(139, 69, 19, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .weather-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #8b4513;
+        }
+
+        .advertisements {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 3px solid #d4af37;
+        }
+
+        .ad {
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            color: #d4af37;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .ad-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff69b4;
+            animation: floatHeart 6s infinite linear;
+            opacity: 0.7;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .newspaper-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem;
+            }
+
+            .daily-prophet-title {
+                font-size: 2rem;
+            }
+
+            .article-headline {
+                font-size: 1.8rem;
+            }
+
+            .article-content {
+                columns: 1;
+            }
+
+            .newspaper-date,
+            .back-button {
+                position: relative;
+                top: auto;
+                right: auto;
+                left: auto;
+                margin: 0.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .photo-placeholder {
+                height: 180px !important;
+                min-height: 120px;
+            }
+
+            .photo-placeholder img {
+                object-fit: cover !important;
+                height: 100% !important;
+                width: 100% !important;
+            }
+
+            .timeline-article {
+                padding: 1rem !important;
+            }
+
+            .timeline-headline {
+                font-size: 1.1rem !important;
+            }
+
+            .weather-section,
+            .timeline-article[style*="grid-column"] {
+                padding: 1rem !important;
+            }
+
+            .weather-section div[style*="font-size:2.2rem"] {
+                font-size: 1.3rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="newspaper-container">
+        <div class="newspaper-header">
+            <!-- <button class="back-button" onclick="window.location.href="1.html">← Back to Great Hall</button> -->
+            <button class="back-button" onclick="window.location.href='1.html'">← Back to Great Hall</button>
+            <div class="newspaper-date">Love Edition • 3 Month Anniversary</div>
+            <h1 class="daily-prophet-title">The Daily Prophet</h1>
+            <p class="newspaper-subtitle">The Wizarding World's Most Romantic Chronicles</p>
+        </div>
+
+        <div class="newspaper-content">
+            <div class="main-article">
+                <h2 class="article-headline">BREAKING: Local Wizard Falls Under Powerful Love Spell</h2>
+                <p class="article-byline">By Rita Skeeter, Love Correspondent</p>
+                <div class="article-content">
+                    In an unprecedented turn of events that has shaken the very foundations of the wizarding world, a
+                    local wizard has reportedly fallen under the most powerful love spell known to magical kind. The
+                    spell, cast approximately three months ago, shows no signs of weakening and, according to our
+                    sources, continues to grow stronger each day.
+
+                    "I've never seen anything like it," reports Madam Pomfrey, the renowned healer. "The symptoms are
+                    unlike any love potion we've encountered. The subject displays constant happiness, an inability to
+                    stop smiling, and an alarming tendency to break into spontaneous declarations of affection."
+
+                    The spell appears to have been cast by an extraordinarily gifted witch whose magical abilities
+                    include the rare talent of making time stand still with just a glance, turning ordinary moments into
+                    pure magic, and possessing the power to make hearts skip beats from considerable distances.
+
+                    Ministry officials have declared this particular enchantment to be "beneficial to public health and
+                    happiness" and have issued no warnings about its continued effects. In fact, they've recommended
+                    that more wizards seek out such spells for their own wellbeing.
+                </div>
+
+                <div class="magical-quote">
+                    The heart wants what it wants, and mine has chosen its home in you. No spell could be more powerful
+                    than the magic we create together.
+                </div>
+            </div>
+
+            <div class="timeline-article" data-month="Moment 1">
+                <h3 class="timeline-headline">First Magical Encounter Reported</h3>
+                <!-- Replace the emoji with your photo below -->
+                <div class="photo-placeholder" style="padding:0; height:400px; overflow:hidden;">
+                    <img src="photos/ourfuture.png" alt="First Magical Encounter"
+                        style="width:100%; height:100%; object-fit:contain; border-radius:10px;">
+                </div>
+                <div class="timeline-content">
+                    Witnesses report that the initial meeting between the two magical beings created such a powerful
+                    surge of energy that flowers bloomed out of season and stars shone brighter in the night sky. The
+                    Ministry's Department of Magical Accidents and Catastrophes received seventeen reports of
+                    "unexplained happiness" in the surrounding area.
+                </div>
+                <div class="timeline-content">
+                    <strong>Key Events:</strong> First conversation lasted three hours (felt like three minutes), first
+                    laugh caused nearby unicorns to gather, first goodbye took an additional hour due to neither party
+                    wanting to leave.
+                </div>
+            </div>
+
+            <div class="timeline-article" data-month="Moment 2">
+                <h3 class="timeline-headline">Love Potion Got Stronger</h3>
+                <div class="photo-placeholder" style="padding:0; height:400px; overflow:hidden;">
+                    <img src="photos/dailyprophet2.png" alt="First Magical Encounter"
+                        style="width:100%; height:100%; object-fit:contain; border-radius:10px;">
+                </div>
+                <div class="timeline-content">
+                    The second month saw unprecedented magical activity as the couple's bond strengthened. Local weather
+                    patterns began synchronizing with their emotions, causing rainbow appearances during happy moments
+                    and gentle rain during their times apart (which witnesses describe as "romantic" rather than
+                    melancholic).
+                </div>
+                <div class="timeline-content">
+                    <strong>Notable Incidents:</strong> First "I miss you" text caused shooting stars, shared dreams
+                    reported by both parties, discovery that they both think in the same magical wavelength.
+                </div>
+            </div>
+
+            <div class="timeline-article" data-month="Moment 3">
+                <h3 class="timeline-headline">Patronus Charm Reaches Maximum Strength</h3>
+                <div class="photo-placeholder" style="padding:0; height:400px; overflow:hidden;">
+                    <img src="photos/dailyprophet3.png" alt="First Magical Encounter"
+                        style="width:100%; height:100%; object-fit:contain; border-radius:10px;">
+                </div>
+                <div class="timeline-content">
+                    As we enter the third month of this magical phenomenon, experts report that both parties have
+                    developed the ability to cast perfect Patronus charms simply by thinking of each other. The silvery
+                    guardians have been spotted dancing together in meadows across the countryside.
+                </div>
+                <div class="timeline-content">
+                    <strong>Current Status:</strong> Both subjects report feeling "completely under each other's spell,"
+                    symptoms include constant smiling, frequent daydreaming, and an irresistible urge to plan future
+                    adventures together.
+                </div>
+            </div>
+
+            <!-- <div class="weather-section">
+                <h3 class="weather-title">🌟 Magical Weather Report 🌟</h3>
+                <p><strong>Today's Forecast:</strong> Sunny with a high chance of love, scattered butterflies in the
+                    stomach area, and a 100% probability of magical moments. Evening brings perfect stargazing
+                    conditions with extra sparkle in the atmosphere.</p>
+                <p><strong>Love Index:</strong> Off the charts! ❤️</p>
+            </div> -->
+            <div class="timeline-article"
+                style="grid-column: 1 / -1; margin-bottom:2rem; background:rgba(255,255,255,0.95);">
+                <h3 class="timeline-headline">🌟 Magical Weather Report 🌟</h3>
+                <p><strong>Today's Forecast:</strong> Sunny with a high chance of love, scattered butterflies in the
+                    stomach area, and a 100% probability of magical moments. Evening brings perfect stargazing
+                    conditions with extra sparkle in the atmosphere.</p>
+                <p><strong>Love Index:</strong> Off the charts! ❤️</p>
+                <!-- Creative Love Meter Graph -->
+                <div style="margin:2rem 0;">
+                    <div style="font-family:'Cinzel',serif; font-size:1.1rem; margin-bottom:0.5rem;">Love Meter</div>
+                    <div
+                        style="background:#f4e7c5; border-radius:20px; height:36px; width:100%; box-shadow:0 2px 8px #d4af3740; position:relative; overflow:hidden;">
+                        <div
+                            style="background:linear-gradient(90deg,#ff69b4,#ffd700,#d4af37); height:100%; width:98%; border-radius:20px; position:absolute; left:0; top:0; animation:lovemeterfill 2s cubic-bezier(.68,-0.55,.27,1.55) forwards;">
+                        </div>
+                        <div style="position:absolute; right:10px; top:6px; font-size:1.3rem;">💖 98%</div>
+                    </div>
+                    <style>
+                        @keyframes lovemeterfill {
+                            from {
+                                width: 0;
+                            }
+
+                            to {
+                                width: 98%;
+                            }
+                        }
+                    </style>
+                </div>
+                <!-- Animated Weather Icons -->
+                <div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
+                    <div style="text-align:center;">
+                        <div style="font-size:2.2rem; animation:spincloud 6s linear infinite;">☁️✨</div>
+                        <div style="font-size:0.95rem;">Clouds of Cuddles</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2.2rem; animation:bounceheart 1.5s infinite;">💓</div>
+                        <div style="font-size:0.95rem;">Heartbeat Gusts</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2.2rem; animation:floatbutterfly 3s ease-in-out infinite;">🦋</div>
+                        <div style="font-size:0.95rem;">Butterfly Showers</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:2.2rem; animation:twinkleStar 2s infinite;">🌟</div>
+                        <div style="font-size:0.95rem;">Starlit Evenings</div>
+                    </div>
+                </div>
+                <style>
+                    @keyframes spincloud {
+                        0% {
+                            transform: rotate(0deg);
+                        }
+
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+
+                    @keyframes bounceheart {
+
+                        0%,
+                        100% {
+                            transform: translateY(0);
+                        }
+
+                        50% {
+                            transform: translateY(-12px);
+                        }
+                    }
+
+                    @keyframes floatbutterfly {
+
+                        0%,
+                        100% {
+                            transform: translateY(0);
+                        }
+
+                        50% {
+                            transform: translateY(-10px) scale(1.2);
+                        }
+                    }
+
+                    @keyframes twinkleStar {
+
+                        0%,
+                        100% {
+                            opacity: 1;
+                        }
+
+                        50% {
+                            opacity: 0.3;
+                        }
+                    }
+                </style>
+                <!-- Magical Forecast Footer -->
+                <div style="margin-top:1.5rem; font-style:italic; color:#8b4513; text-align:center;">
+                    <span>✨ Remember: No umbrella needed, just bring your heart! ✨</span>
+                </div>
+                <!-- Add this just below the Magical Forecast Footer in the weather-section -->
+                <div style="margin-top:1rem; font-style:italic; color:#b8860b; text-align:center; font-size:1.05rem;">
+                    <span>🌦️ Side effects may include excessive smiling, random daydreaming, and an uncontrollable urge
+                        to send cheesy texts.<br>
+                        Consult your heart before proceeding. 💌</span>
+                </div>
+
+            </div>
+
+            <div class="advertisements">
+                <div class="ad">
+                    <div class="ad-title">🧪 Honeydukes Sweetshop</div>
+                    <p>"Love is sweet, but our Chocolate Frogs are sweeter! Perfect for magical moments together."</p>
+                </div>
+
+                <div class="ad">
+                    <div class="ad-title">🌹 Magical Florist</div>
+                    <p>"Roses are red, violets are blue, our flowers are magical, just like you two!"</p>
+                </div>
+
+                <div class="ad">
+                    <div class="ad-title">🔮 Fortune Telling Services</div>
+                    <p>"We predict a lifetime of happiness in your future! Crystal ball readings available by
+                        appointment."</p>
+                </div>
+
+                <div class="ad">
+                    <div class="ad-title">📚 Flourish & Blotts</div>
+                    <p>"New Release: 'Advanced Love Spells for Beginners' - though you two seem to have mastered them
+                        already!"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['💖', '💕', '💗', '💝', '💘', '❤️'];
+
+            setInterval(() => {
+                if (container.children.length < 15) {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                    heart.style.animationDuration = (Math.random() * 3 + 6) + 's';
+                    container.appendChild(heart);
+
+                    setTimeout(() => {
+                        if (container.contains(heart)) {
+                            container.removeChild(heart);
+                        }
+                    }, 9000);
+                }
+            }, 800);
+        }
+
+        // Newspaper animation effects
+        function addNewspaperEffects() {
+            const articles = document.querySelectorAll('.timeline-article');
+
+            articles.forEach((article, index) => {
+                article.style.opacity = '0';
+                article.style.transform = 'translateY(20px)';
+
+                setTimeout(() => {
+                    article.style.transition = 'all 0.6s ease';
+                    article.style.opacity = '1';
+                    article.style.transform = 'translateY(0)';
+                }, index * 300);
+            });
+        }
+
+        // Initialize effects
+        window.onload = function () {
+            createFloatingHearts();
+            addNewspaperEffects();
+
+            // Add typing effect to main headline
+            const headline = document.querySelector('.article-headline');
+            const text = headline.textContent;
+            headline.textContent = '';
+
+            let i = 0;
+            const typeWriter = () => {
+                if (i < text.length) {
+                    headline.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            };
+
+            setTimeout(typeWriter, 1000);
+        };
+    </script>
+</body>
+
+</html>
