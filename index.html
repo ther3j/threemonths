@@ -2,9 +2,79 @@
 <html>
   <head>
     <meta http-equiv="refresh" content="0; url=1.html">
-    <title>Redirecting...</title>
+    <title>Platform 9¾ - Magical Redirect</title>
+    <style>
+      body {
+        background-color: #0a0e23;
+        color: #d3b873;
+        font-family: 'Times New Roman', serif;
+        text-align: center;
+        background-image: url('https://i.imgur.com/8Z7RyWn.jpg');
+        background-size: cover;
+        padding: 50px;
+      }
+      .container {
+        background-color: rgba(10, 14, 35, 0.8);
+        border: 2px solid #d3b873;
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 0 20px gold;
+      }
+      h1 {
+        color: #f0c75e;
+        font-family: 'Harry P', fantasy;
+        text-shadow: 2px 2px 4px #000;
+      }
+      a {
+        color: #c3941d;
+        text-decoration: none;
+        font-weight: bold;
+        background-color: rgba(10, 14, 35, 0.7);
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: 1px solid #d3b873;
+      }
+      a:hover {
+        color: gold;
+        text-shadow: 0 0 5px gold;
+      }
+      .snitch {
+        width: 50px;
+        height: 50px;
+        margin: 20px auto;
+        background-image: url('https://i.imgur.com/JQJQZJZ.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation: fly 3s infinite;
+      }
+      @keyframes fly {
+        0% { transform: translateX(0) rotate(0deg); }
+        25% { transform: translateX(50px) rotate(90deg); }
+        50% { transform: translateX(0) rotate(180deg); }
+        75% { transform: translateX(-50px) rotate(270deg); }
+        100% { transform: translateX(0) rotate(360deg); }
+      }
+      .wand {
+        font-size: 24px;
+        animation: sparkle 2s infinite;
+      }
+      @keyframes sparkle {
+        0% { opacity: 1; }
+        50% { opacity: 0.3; }
+        100% { opacity: 1; }
+      }
+    </style>
   </head>
   <body>
-    If you are not redirected automatically, <a href="1.html">click here</a>.
+    <div class="container">
+      <h1>Platform 9¾</h1>
+      <div class="snitch"></div>
+      <p>You're being magically transported to your destination...</p>
+      <p><span class="wand">✧</span> <em>Alohomora Portus!</em> <span class="wand">✧</span></p>
+      <p>If the spell didn't work, <a href="1.html">tap your wand here</a>.</p>
+      <p style="font-size: smaller; margin-top: 30px;">*Hogwarts Express now boarding*</p>
+    </div>
   </body>
 </html>
